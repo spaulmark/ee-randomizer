@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8" />
+
+  <title>EE Block randomizer</title>
+
+  <script>
+    // thank you stackoverflow, very cool
+    function shuffle(array) {
+      let currentIndex = array.length,
+        randomIndex;
+      while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [
+          array[randomIndex],
+          array[currentIndex],
+        ];
+      }
+      return array;
+    }
+    const totalBgs = 266;
+    const totalDecors = 325;
+    const totalBlocks = 300;
+    var randomize = () => {
+      const blocks = document.getElementById("blocks").value;
+      const decors = document.getElementById("decor").value;
+      const bgs = document.getElementById("bg").value;
+
+      const bgvalues = shuffle(
+        [...Array(totalBgs).keys()].map((i) => i + 1)
+      ).slice(0, bgs);
+      const blockvalues = shuffle(
+        [...Array(totalBlocks).keys()].map((i) => i + 1)
+      ).slice(0, blocks);
+      const decorvalues = shuffle(
+        [...Array(totalDecors).keys()].map((i) => i + 1)
+      ).slice(0, decors);
+
+      // clear nodes
+      const data = [
+        { folder: "decors", element: "decorresults", array: decorvalues },
+        { folder: "blocks", element: "blockresults", array: blockvalues },
+        { folder: "bgs", element: "bgresults", array: bgvalues },
+      ];
+      // populate nodes
+      for (const item of data) {
+        document.getElementById(item.element).innerHTML = "";
+        for (const id of item.array) {
+          var img = document.createElement("img");
+          img.setAttribute("src", `img/${item.folder}/${id}.png`);
+          document.getElementById(item.element).appendChild(img);
+        }
+      }
+    };
+  </script>
+</head>
+
+<body>
+  <h1>EE Block randomizer</h1>
+  <label for="blocks">Blocks:</label>
+  <input type="number" id="blocks" name="blocks" min="0" max="300" value="5" />
+  <label for="bg">Backgrounds:</label>
+  <input type="number" id="bg" name="bg" min="0" max="266" value="5" />
+  <label for="decor">Decorations:</label>
+  <input type="number" id="decor" name="decor" min="0" max="325" value="5" />
+
+  <br />
+  <button id="randomize" onclick="randomize()">randomize</button>
+
+  <div id="results">
+    <div id="blockresults"></div>
+    <div id="decorresults"></div>
+    <div id="bgresults"></div>
+  </div>
+  <hr />
+  <h3>All of these blocks are not included in the randomizer:</h3>
+  <img src="img/unrestricted.png" />
+  <h3>Also, lava block is missing, but pretend it's there.</h3>
+  <hr />
+  <h3>EE Randomizer Official Rules:</h3>
+  <p>
+    Do whatever you want. Use only the chosen blocks or use this a guideline for
+    inspiration, or anything in between.
+  </p>
+</body>
