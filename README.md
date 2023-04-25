@@ -1,3 +1,1 @@
-# ee-randomizer
-
-Random palette generator for everybody edits.
+spaulmark.github.io/ee-randomizer
