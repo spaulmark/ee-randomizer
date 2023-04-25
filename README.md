@@ -1,1 +1,1 @@
-spaulmark.github.io/ee-randomizer
+https://spaulmark.github.io/ee-randomizer
